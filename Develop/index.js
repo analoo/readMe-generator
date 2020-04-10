@@ -31,13 +31,37 @@ const questions = [
 ];
 
 inquirer.prompt(questions).then(function(data){
-    console.log(data)
+    
+    
+    
+    
+    var string = `# ${data.title} READ ME
+
+    ## SUMMARY
+    ${data.description}
+
+    ## Table of Contents
+
+    ## Installation
+
+
+    ##Usage
+
+    ##License
+    ${data.license}
+
+    ##Contributing
+    ${data.contributors}
+
+    ##Tests
+    `
+    console.log(data);
+    writeToFile("readmoi.md", string);
 }
 
 )
 
-data = "asdafsafa"
-writeToFile("readmoi.md", data);
+
 
 function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, function(err){
