@@ -1,5 +1,7 @@
 var fs = require("fs")
 var inquirer = require("inquirer")
+var axios = require("axios")
+
 
 const questions = [
     {
@@ -30,38 +32,59 @@ const questions = [
 
 ];
 
-inquirer.prompt(questions).then(function(data){
+inquirer.prompt(questions)
+.then(function(data){
+    const queryURL = `https://api.github.com/users/${data.github}`;
+    console.log(queryURL);
     
-    
-    
-    
-    var string = `# ${data.title} READ ME
+    axios.get(queryURL)
+    .then(function(res){
 
-    ## SUMMARY
-    ${data.description}
+        var string = 
 
-    ## Table of Contents
+`# ${data.title} READ ME
+        
+## SUMMARY
+        
+${data.description}
+        
+        
+## Table of Contents
+        
+        
+## Installation
+        
+        
+        
+##Usage
+        
+        
+##License
+            
+${data.license}
+        
+         
+##Contributing
+            
+${data.contributors}
+        
+        
+##Tests
+        
+        
+##Author
 
-    ## Installation
+[GitHub](${res.data.avatar_url})
+[myImage](${res.data.html_url})
+       
+        
+            `
+           
+            console.log(data);
+            writeToFile("readmoi.md", string);
+            });
 
-
-    ##Usage
-
-    ##License
-    ${data.license}
-
-    ##Contributing
-    ${data.contributors}
-
-    ##Tests
-    `
-    console.log(data);
-    writeToFile("readmoi.md", string);
-}
-
-)
-
-
+    });
 
 function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, function(err){
@@ -76,4 +99,4 @@ function init() {
 
 }
 
-init();
+// init();

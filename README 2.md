@@ -13,11 +13,11 @@ The README will be populated with the following:
 * At least one badge
 * Project title x
 * Description x
-* Table of Contents
-* Installation
+* Table of Contents 
+* Installation 
 * Usage
 * License
-* Contributing
+* Contributing x
 * Tests
 * Questions
   * User GitHub profile picture
