@@ -25,15 +25,15 @@ const questions = [
         message: "Who are other contributors on this project?"
     },
     {
-        type: "checkbox",
+        type: "list",
         name: "license",
-        message: "Any licenses?",
-        choices: ["APM", "AUR License", "Bower", "Cocoapods", "Conda - License", "CPAN", "CRAN/METRACRAN", "Crates.io", "CTAN", "DUB", "Eclipse", "GitHub", "Hex.pm", "NPM", "Packagist", "PyPi"]
+        message: "How do you want to license this software?",
+        choices: ["Apache", "AGPLv3", "Boost Software","GPLv3", "LGPLv3", "MIT", "Mozilla Public", "The Unlicense"]
     },
     {
         type: "input",
         name: "dependencies",
-        message: "List your dependancies (separated by commas)"
+        message: "List your dependencies (separated by commas)"
     },
     {
         type: "input",
@@ -53,7 +53,6 @@ inquirer.prompt(questions)
 
         // data parsers
         var listOfDepends = data.dependencies.split(",");
-
         var parsedDependencies = "```\n" + listOfDepends.join("\n") + "\n```" ;
         var installCode = "```\n" + parse(listOfDepends)+ "\n```" 
         
@@ -66,21 +65,13 @@ inquirer.prompt(questions)
             return str
         }
 
+        console.log(data.license)
         // creates badges
-        function createBadges(list){
-            var str = "";
-            for (let i=0; i< list.length; i++){
-                str += "<img src='https://img.shields.io/static/v1?label=License&message=" + list[i] +"&color=blue'> \n"
-            }
-            return str
-            
-        }
 
+        var badge = "<img src='https://img.shields.io/static/v1?label=License&message=" + data.license +"&color=brightgreen'> \n"
 
-
-        var parsedLicenses = "```\n" + data.license.join("\n") + "\n```" ;
+        var parsedLicenses = data.license
         var parsedtest = "```\n" + data.test.split(",").join("\n") + "\n```" ;
-        var badgeList = createBadges(data.license);
 
 // LAS that will be used to create the mark up
 
@@ -92,7 +83,7 @@ var string =
         
 ${data.description}
 
-${badgeList}
+${badge}
         
 ## Table of Contents
 
@@ -121,7 +112,7 @@ ${parsedDependencies}
 ${parsedLicenses}
         
          
-## Contributing
+## Contributors
             
 ${data.contributors}
         

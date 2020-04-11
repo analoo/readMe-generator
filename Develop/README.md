@@ -1,13 +1,16 @@
-# Read Me Generator READ ME
+# READ ME Generator READ ME
         
-## SUMMARY
+## Summary
         
-This project creates a read me by prompting the user to provide some information which is used to query GitHub for additional information.
+This program creates a README.md with a little bit of information from the user. With GitHub username, a call is made to the GitHub API that returns the user's landing page and profile.
 
-<img src='https://img.shields.io/static/v1?label=License&message=GitHub&color=blue'> 
-<img src='https://img.shields.io/static/v1?label=License&message=NPM&color=blue'> 
+<img src='https://img.shields.io/static/v1?label=License&message=MIT&color=brightgreen'> 
 
-        
+
+## Site Image
+![site](code-image.gif)
+
+
 ## Table of Contents
 
 - [Installation](#Installation)
@@ -41,13 +44,10 @@ inquirer
 ## License
 
             
-```
-GitHub
-NPM
-```
+MIT
         
          
-## Contributing
+## Contributors
             
 Brad Davis
         
