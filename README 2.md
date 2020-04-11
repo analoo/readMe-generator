@@ -13,15 +13,15 @@ The README will be populated with the following:
 * At least one badge
 * Project title x
 * Description x
-* Table of Contents 
+* Table of Contents x
 * Installation 
 * Usage
 * License
 * Contributing x
 * Tests
-* Questions
-  * User GitHub profile picture
-  * User GitHub email
+* Questions x
+  * User GitHub profile picture x
+  * User GitHub email x
 
 Following the [common templates for user stories](https://en.wikipedia.org/wiki/User_story#Common_templates), we can frame this challenge as follows:
 
