@@ -2,7 +2,7 @@ var fs = require("fs")
 var inquirer = require("inquirer")
 var axios = require("axios")
 
-
+// list of questions to ask the user
 const questions = [
     {
         type: "input",
@@ -28,7 +28,7 @@ const questions = [
         type: "checkbox",
         name: "license",
         message: "Any licenses?",
-        choices: ["APM", "AUR License", "Bower", "GitHub", "Cocoapods", "Conda - License", "CPAN", "CRAN/METRACRAN", "Crates.io", "CTAN", "DUB", "Eclipse", "GitHub", "Hex.pm", "NPM", "Packagist", "PyPi"]
+        choices: ["APM", "AUR License", "Bower", "Cocoapods", "Conda - License", "CPAN", "CRAN/METRACRAN", "Crates.io", "CTAN", "DUB", "Eclipse", "GitHub", "Hex.pm", "NPM", "Packagist", "PyPi"]
     },
     {
         type: "input",
@@ -43,40 +43,46 @@ const questions = [
 
 ];
 
+// prompts the user for the questions above, and stores the output in data then makes a call to github
 inquirer.prompt(questions)
 .then(function(data){
     const queryURL = `https://api.github.com/users/${data.github}`;
-    console.log(queryURL);
     
     axios.get(queryURL)
     .then(function(res){
+
+        // data parsers
         var listOfDepends = data.dependencies.split(",");
 
-        var parsedDependencies = "``` \n" + listOfDepends.join("\n") + "\n```" ;
-        var installCode = "``` \n" + parse(listOfDepends)+ "\n```" 
+        var parsedDependencies = "```\n" + listOfDepends.join("\n") + "\n```" ;
+        var installCode = "```\n" + parse(listOfDepends)+ "\n```" 
         
         function parse(list){
             var str = ""
             for (let i = 0; i < list.length ; i++){
-               str += "npm install" + list[i] + "\n"
+               str += "npm install " + list[i] + "\n"
 
             }
             return str
         }
 
+        // creates badges
         function createBadges(list){
             var str = "";
             for (let i=0; i< list.length; i++){
-                str += "https://img.shields.io/static/v1?label=License&message="list[i]"&color=blue \n"
+                str += "<img src='https://img.shields.io/static/v1?label=License&message=" + list[i] +"&color=blue'> \n"
             }
+            return str
             
         }
 
 
-        var parsedLicenses = "``` \n" + data.license.join("\n") + "\n```" ;
-        var parsedtest = "``` \n" + data.test.split(",").join("\n") + "\n```" ;
-        var badgeList = createBadges(parsedLicenses);
 
+        var parsedLicenses = "```\n" + data.license.join("\n") + "\n```" ;
+        var parsedtest = "```\n" + data.test.split(",").join("\n") + "\n```" ;
+        var badgeList = createBadges(data.license);
+
+// LAS that will be used to create the mark up
 
 var string = 
 
@@ -131,13 +137,15 @@ ${parsedtest}
        
         
 `
-           
-    console.log(data);
-    writeToFile("readmoi.md", string);
+          
+// write file is called using the LAS asking to to save the output on README.md
+    writeToFile("README.md", string);
 });
 
     });
 
+
+// function that takes in a file name and some data to write into file
 function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, function(err){
         if(err) {
@@ -147,8 +155,10 @@ function writeToFile(fileName, data) {
     })
 }
 
+// starts the process
+
 function init() {
 
 }
 
-// init();
+init();
